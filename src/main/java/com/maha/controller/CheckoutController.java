@@ -28,6 +28,6 @@ public class CheckoutController {
             @RequestBody List<String> productsIds) {
         CheckoutResponse response = checkoutService.checkout(productsIds);
         System.out.println(response.getPrice());
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
