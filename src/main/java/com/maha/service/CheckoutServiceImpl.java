@@ -28,9 +28,9 @@ public class CheckoutServiceImpl implements CheckoutService {
     @Override
     public CheckoutResponse checkout(List<String> productIds) {
         List<ProductOrder> productOrders = buildProductOrders(productIds);
-        double totalPrice = productOrders.stream().mapToDouble(ProductOrder::getTotalPrice).sum();
+        double actualPrice = productOrders.stream().mapToDouble(ProductOrder::getActualPrice).sum();
         double discountedPrice = productOrders.stream().mapToDouble(ProductOrder::getDiscountedPrice).sum();
-        double finalPrice = totalPrice-discountedPrice;
+        double finalPrice = actualPrice-discountedPrice;
         return CheckoutResponse.builder().price(finalPrice).build();
     }
 
@@ -41,7 +41,7 @@ public class CheckoutServiceImpl implements CheckoutService {
 
     private ProductOrder buildProductOrder(String productId, Long productCount) {
         Product product = productRepository.getById(productId);
-        ProductOrder productOrder = ProductOrder.builder().product(product).numOfUnits(productCount).build();
+        ProductOrder productOrder = ProductOrder.builder().product(product).numOfUnits(productCount).actualPrice().build();
         productDiscountService.calculateAndSetDiscount(productOrder);
         return productOrder;
     }
