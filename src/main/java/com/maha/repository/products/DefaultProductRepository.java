@@ -1,11 +1,14 @@
 package com.maha.repository.products;
 
+import com.maha.exception.ProductNotFoundException;
 import com.maha.model.Product;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Created by sandeepreddy on 06/03/21.
@@ -21,8 +24,15 @@ public class DefaultProductRepository implements ProductRepository {
     }
 
     @Override
-    public Product getById(String productId) {
-        return productList.stream().filter(e -> e.getId().equals(productId)).findFirst().get();
+    public Product getById(String productId) throws ProductNotFoundException{
+        Optional<Product> product = productList.stream().filter(e -> e.getId().equals(productId)).findAny();
+        if(product.isPresent()){
+            return product.get();
+        }
+        else{
+            throw new ProductNotFoundException("Product not found");
+        }
+
     }
 
     private void createdProducts() {

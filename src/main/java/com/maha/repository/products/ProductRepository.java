@@ -1,5 +1,6 @@
 package com.maha.repository.products;
 
+import com.maha.exception.ProductNotFoundException;
 import com.maha.model.Product;
 
 /**
@@ -7,5 +8,5 @@ import com.maha.model.Product;
  */
 public interface ProductRepository {
 
-    Product getById(String productId);
+    Product getById(String productId) throws ProductNotFoundException;
 }
