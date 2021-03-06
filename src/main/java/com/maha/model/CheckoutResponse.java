@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class CheckoutResponse {
 
-    private double price;
+    private long price;
 
 }

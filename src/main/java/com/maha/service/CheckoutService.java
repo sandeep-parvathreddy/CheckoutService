@@ -1,5 +1,6 @@
 package com.maha.service;
 
+import com.maha.exception.ProductNotFoundException;
 import com.maha.model.CheckoutResponse;
 
 import java.util.List;
@@ -9,5 +10,5 @@ import java.util.List;
  */
 public interface CheckoutService {
 
-    CheckoutResponse checkout(List<String> productIds);
+    CheckoutResponse checkout(List<String> productIds) throws ProductNotFoundException;
 }

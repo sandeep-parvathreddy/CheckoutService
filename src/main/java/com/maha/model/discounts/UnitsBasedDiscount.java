@@ -13,7 +13,7 @@ public class UnitsBasedDiscount extends ProductDiscount{
 
     private int units;
 
-    private double price;
+    private long price;
 
     @Override
     public DiscountType getDiscountType() {

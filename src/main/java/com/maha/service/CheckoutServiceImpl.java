@@ -1,53 +1,34 @@
 package com.maha.service;
 
-import com.maha.discounts.ProductDiscountService;
 import com.maha.model.CheckoutResponse;
-import com.maha.model.Product;
 import com.maha.model.ProductOrder;
-import com.maha.repository.products.ProductRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * Created by sandeepreddy on 06/03/21.
  */
 @Service
+@Log4j2
 public class CheckoutServiceImpl implements CheckoutService {
 
     @Autowired
-    ProductRepository productRepository;
-
-    @Autowired
-    ProductDiscountService productDiscountService;
+    ProductOrderBuilderService productOrderBuilderService;
 
     @Override
     public CheckoutResponse checkout(List<String> productIds) {
-        List<ProductOrder> productOrders = buildProductOrders(productIds);
-        double actualPrice = productOrders.stream().mapToDouble(ProductOrder::getActualPrice).sum();
-        double discountedPrice = productOrders.stream().mapToDouble(ProductOrder::getDiscountedPrice).sum();
-        double finalPrice = actualPrice-discountedPrice;
+        List<ProductOrder> productOrders = productOrderBuilderService.build(productIds);
+        long actualPrice = productOrders.stream().mapToLong(ProductOrder::getActualPrice).sum();
+        long discountedPrice = productOrders.stream().mapToLong(ProductOrder::getDiscountedPrice).sum();
+
+        log.info("Calculated actualPrice is {} and  discountedPrice is {} ",actualPrice,discountedPrice);
+
+        long finalPrice = actualPrice-discountedPrice;
         return CheckoutResponse.builder().price(finalPrice).build();
     }
 
-    private List<ProductOrder> buildProductOrders(List<String> productIds) {
-        Map<String,Long> productsCount = calculateUniqueProductCount(productIds);
-        return productsCount.keySet().stream().map(productId -> buildProductOrder(productId,productsCount.get(productId))).collect(Collectors.toList());
-    }
 
-    private ProductOrder buildProductOrder(String productId, Long productCount) {
-        Product product = productRepository.getById(productId);
-        ProductOrder productOrder = ProductOrder.builder().product(product).numOfUnits(productCount).actualPrice().build();
-        productDiscountService.calculateAndSetDiscount(productOrder);
-        return productOrder;
-    }
-
-    private static Map<String,Long> calculateUniqueProductCount(List<String> productIds) {
-        return productIds.stream().collect(Collectors.groupingBy(Function.identity(),
-                Collectors.counting()));
-    }
 }

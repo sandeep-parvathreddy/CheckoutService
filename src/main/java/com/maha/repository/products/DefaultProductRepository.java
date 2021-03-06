@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * Created by sandeepreddy on 06/03/21.
@@ -24,7 +23,7 @@ public class DefaultProductRepository implements ProductRepository {
     }
 
     @Override
-    public Product getById(String productId) throws ProductNotFoundException{
+    public Product getById(String productId){
         Optional<Product> product = productList.stream().filter(e -> e.getId().equals(productId)).findAny();
         if(product.isPresent()){
             return product.get();
@@ -36,9 +35,9 @@ public class DefaultProductRepository implements ProductRepository {
     }
 
     private void createdProducts() {
-        productList.add(Product.builder().id("001").name("Rolex").price(100.0).build());
-        productList.add(Product.builder().id("002").name("Michael Kors").price(80.0).build());
-        productList.add(Product.builder().id("003").name("Swatch").price(50.0).build());
-        productList.add(Product.builder().id("004").name("Casio").price(30.0).build());
+        productList.add(Product.builder().id("001").name("Rolex").price(100).build());
+        productList.add(Product.builder().id("002").name("Michael Kors").price(80).build());
+        productList.add(Product.builder().id("003").name("Swatch").price(50).build());
+        productList.add(Product.builder().id("004").name("Casio").price(30).build());
     }
 }

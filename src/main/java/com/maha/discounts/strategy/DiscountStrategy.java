@@ -8,5 +8,5 @@ import com.maha.model.discounts.ProductDiscount;
  */
 public interface DiscountStrategy {
 
-    double apply(ProductOrder product, ProductDiscount productDiscount);
+    long apply(ProductOrder product, ProductDiscount productDiscount);
 }

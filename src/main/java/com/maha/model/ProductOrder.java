@@ -12,15 +12,15 @@ public class ProductOrder {
 
     private Product product;
 
-    private Long numOfUnits;
+    private long numOfUnits;
 
-    private double actualPrice;
+    private long actualPrice;
 
-    private double discountedPrice;
+    private long discountedPrice;
 
     public static class ProductOrderBuilder{
         public ProductOrderBuilder actualPrice(){
-            this.actualPrice = product.getPrice()*numOfUnits;
+            this.actualPrice = (long)product.getPrice()*numOfUnits;
             return this;
         }
     }

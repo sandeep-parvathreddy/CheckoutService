@@ -25,8 +25,8 @@ public class ProductOrderBuilderService {
     ProductDiscountService productDiscountService;
 
     public List<ProductOrder> build(List<String> productIds) {
-        Map<String,Long> productsCount = calculateUniqueProductCount(productIds);
-        return productsCount.keySet().stream().map(productId -> buildProductOrder(productId,productsCount.get(productId))).collect(Collectors.toList());
+        Map<String, Long> productsCount = calculateUniqueProductCount(productIds);
+        return productsCount.keySet().stream().map(productId -> buildProductOrder(productId, productsCount.get(productId))).collect(Collectors.toList());
     }
 
     private ProductOrder buildProductOrder(String productId, Long productCount) {
@@ -36,7 +36,7 @@ public class ProductOrderBuilderService {
         return productOrder;
     }
 
-    private static Map<String,Long> calculateUniqueProductCount(List<String> productIds) {
+    private static Map<String, Long> calculateUniqueProductCount(List<String> productIds) {
         return productIds.stream().collect(Collectors.groupingBy(Function.identity(),
                 Collectors.counting()));
     }
