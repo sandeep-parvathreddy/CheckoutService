@@ -26,12 +26,17 @@ public class ProductOrderBuilderService {
 
     public List<ProductOrder> build(List<String> productIds) {
         Map<String, Long> productsCount = calculateUniqueProductCount(productIds);
-        return productsCount.keySet().stream().map(productId -> buildProductOrder(productId, productsCount.get(productId))).collect(Collectors.toList());
+        return productsCount.keySet().
+                stream().
+                map(productId -> buildProductOrder(productId, productsCount.get(productId))).
+                collect(Collectors.toList());
     }
 
     private ProductOrder buildProductOrder(String productId, Long productCount) {
         Product product = productRepository.getById(productId);
-        ProductOrder productOrder = ProductOrder.builder().product(product).numOfUnits(productCount).actualPrice().build();
+        ProductOrder productOrder = ProductOrder.builder().product(product).
+                                                    numOfUnits(productCount).
+                                                    actualPrice().build();
         productDiscountService.calculateAndSetDiscount(productOrder);
         return productOrder;
     }

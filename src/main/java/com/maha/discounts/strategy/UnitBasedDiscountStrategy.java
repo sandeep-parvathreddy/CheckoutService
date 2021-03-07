@@ -21,6 +21,7 @@ public class UnitBasedDiscountStrategy implements DiscountStrategy {
         if (discountAppliedTimes == 0) {
             return 0;
         }
-        return (long) (productOrder.getProduct().getPrice() * discountAppliedTimes * unitsBasedDiscount.getUnits() - unitsBasedDiscount.getPrice() * discountAppliedTimes);
+        return (long) ((productOrder.getProduct().getPrice() * discountAppliedTimes * unitsBasedDiscount.getUnits())
+                - (unitsBasedDiscount.getPrice() * discountAppliedTimes));
     }
 }
