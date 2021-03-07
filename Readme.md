@@ -67,8 +67,9 @@ CheckoutService is a simple microservice, which performs checkout action in a e-
 1. Having a persistent storage for products and discounts. 
 2. Discounts can be changed frequently and can be of different types/models. Considering these, I feel MongoDB seems to be a better storage option.
 3. We might have to apply more than one discounts for a single product. In such cases above model doesn't work well. To support this, we can use Chain of Responsibility design pattern, where each Discount is an Chain, which applies a discoun if required conditions are met and then forwards to the next chain. 
-4. If products or discounts grow massively, then in such cases we need to look at optimising the data fetch and data storage. We can use Database sharding and Caching the fetched records.
-5. This service should be highly available, so the application nodes need to be replicated and so load is shared.
+4. Price of the product is currently defined using long datatype, but if accuracy is needed we can use BigDecimal.
+5. If products or discounts grow massively, then in such cases we need to look at optimising the data fetch and data storage. We can use Database sharding and Caching the fetched records.
+6. This service should be highly available, so the application nodes need to be replicated and so load is shared.
 
 
 
