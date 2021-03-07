@@ -26,7 +26,7 @@ CheckoutService is a simple microservice, which performs checkout action in a e-
  ```
     Content-Type : application/json
     Accept : application/json
- 
+ ```
 - Request Body
 
  ```
@@ -36,7 +36,7 @@ CheckoutService is a simple microservice, which performs checkout action in a e-
 	"003",
 	"001"
  	]
-
+ ```
 - Response Body
 
  ```
@@ -44,7 +44,8 @@ CheckoutService is a simple microservice, which performs checkout action in a e-
 	{
 	"price" : 330
 	}
-
+ ```
+ 
 ## Approach
 1. The application can be divided into multiple layers
 	* Controller : Implements the processing logic of the webservice, parsing the parameters and handling input-output
